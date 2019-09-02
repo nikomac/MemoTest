@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MemoTest.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,10 @@ namespace MemoTest.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var notes = NotesDAL.Retrieve(new Models.NoteRequest());
+
+
+            return View(notes);
         }
 
         public ActionResult About()
