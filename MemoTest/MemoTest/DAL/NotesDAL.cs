@@ -18,7 +18,7 @@ namespace MemoTest.DAL
                 list.AddRange((from note in ctx.Notes
                                where
                                      (string.IsNullOrEmpty(request.Name) || note.Name == request.Name)
-                               orderby note.CreationDate descending
+                               orderby note.IsMarked descending, note.CreationDate descending
                                select note).ToList());
             }
             return list;
@@ -38,8 +38,11 @@ namespace MemoTest.DAL
         }
 
 
-        public static Note Save(Note note)
+        public static Note Create(Note note)
         {
+            note.CreationDate = DateTime.Now;
+            note.EditionDate = DateTime.Now;
+
             using (MemoTestContext ctx = new MemoTestContext(GetConnectionString()))
             {
                 ctx.Notes.Add(note);

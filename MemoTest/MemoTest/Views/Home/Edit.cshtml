@@ -1,0 +1,37 @@
+﻿@model MemoTest.Models.Note
+
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("Save", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Id)
+
+    <table>
+        <tr>
+            <td>Name: </td>
+            <td>@Html.TextBoxFor(m => m.Name)</td>
+        </tr>
+        <tr>
+            <td>Pinned: </td>
+            <td>@Html.CheckBoxFor(m => m.IsMarked)</td>
+        </tr>
+        <tr>
+            <td>Created: </td>
+            <td>@Html.DisplayFor(m => m.CreationDate)</td>
+        </tr>
+        <tr>
+            <td>Last edited: </td>
+            <td>@Html.DisplayFor(m => m.EditionDate)</td>
+        </tr>
+        <tr>
+            <td>Note: </td>
+            <td>@Html.TextAreaFor(m => m.Data)</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Accept" /></td>
+        </tr>
+    </table>
+
+}

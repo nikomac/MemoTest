@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<MemoTest.Models.Note>
 
-@{
-    ViewBag.Title = "Notes";
-}
-
 <h2>Notes</h2>
 
 <p>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div>Name: @Html.TextBox("Name") <input type="submit" value="Search" /></div>
+    }
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr style="background-color:@item.MarkedBackground">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -24,10 +24,9 @@
                 @Html.DisplayFor(modelItem => item.EditionDate)
             </td>
             <td>
-                @Html.ActionLink(item.MarkedName, "Pin", new { item = item }) |
-                @Html.ActionLink("Edit", "Edit", new { item = item }) |
-                @Html.ActionLink("Details", "Details", new { item = item }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink(item.MarkedName, "Pin", item) |
+                @Html.ActionLink("Edit", "Edit", item) |
+                @Html.ActionLink("Delete", "Delete", item.Id)
             </td>
         </tr>
     }

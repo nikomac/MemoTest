@@ -1,4 +1,5 @@
 ﻿using MemoTest.DAL;
+using MemoTest.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +10,52 @@ namespace MemoTest.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(NoteRequest request)
         {
-            var notes = NotesDAL.Retrieve(new Models.NoteRequest());
+            var notes = NotesDAL.Retrieve(request);
 
+            ViewBag.Title = "Notes";
 
             return View(notes);
         }
 
-        public ActionResult About()
+        public ActionResult Edit(Note note)
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Title = "Edit " + note.Name;
 
-            return View();
+            return View(note);
         }
 
-        public ActionResult Contact()
+        public ActionResult Create()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Title = "New";
 
-            return View();
+            return View("Edit", new Note() { CreationDate = DateTime.Now, EditionDate = DateTime.Now });
+        }
+
+        public ActionResult Pin(Note note)
+        {
+            note.IsMarked = !note.IsMarked;
+            NotesDAL.Update(note);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Save(Note note)
+        {
+            if (note.Id == 0)
+                NotesDAL.Create(note);
+            else
+                NotesDAL.Update(note);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            NotesDAL.Delete(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

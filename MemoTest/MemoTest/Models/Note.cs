@@ -14,7 +14,9 @@ namespace MemoTest.Models
         public DateTime EditionDate { get; set; }
         public string Data { get; set; }
 
-        public string MarkedName => IsMarked ? "Pin" : "Unpin";
+        public string MarkedName => IsMarked ? "Unpin" : "Pin";
+        public string MarkedBackground => IsMarked ? "LightSteelBlue" : "Transparent";
+
     }
 
 }
